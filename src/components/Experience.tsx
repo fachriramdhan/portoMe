@@ -44,7 +44,7 @@ export function Experience({ id, lang }: { id?: string; lang: "id" | "en" }) {
     {
       id: "exp2",
       title: "Staff IT & Admin Operasional",
-      company: "PT Brothersindo Saudara Sejati", // (Sesuai kode sebelumnya, jika ada data asli silakan disesuaikan)
+      company: "PT Delta Tekno Perkasa",
       period: "Feb 2023 — Nov 2023",
       descriptions: [
         "Mengembangkan dan memelihara berbagai aplikasi klien menggunakan React dan Node.js.",

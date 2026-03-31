@@ -39,7 +39,7 @@ export function Education({ id, lang }: { id?: string; lang: "id" | "en" }) {
         },
         {
           type: "THESIS PROJECT",
-          title: "Cattle Eye Detection System",
+          title: "BovineEYE Detection System",
           description:
             "Sistem deteksi penyakit pada mata sapi (pink-eye) real-time menggunakan Computer Vision YOLOv4 dan IoT.",
           links: [

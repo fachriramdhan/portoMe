@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom"; // <-- IMPORT BARU INI WAJIB DITAMBAHKAN
 import { animate, inView, stagger } from "motion";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -54,25 +55,6 @@ export function Projects({ id, lang }: { id?: string; lang: "id" | "en" }) {
         lang === "id"
           ? "Meningkatkan efisiensi produksi sebesar 15% dan mengurangi waktu henti peralatan sebesar 22% melalui pemeliharaan prediktif."
           : "Increased production efficiency by 15% and reduced equipment downtime by 22% through predictive maintenance.",
-      metrics: [
-        {
-          label:
-            lang === "id" ? "Peningkatan Efisiensi" : "Efficiency Increase",
-          value: 15,
-          suffix: "%",
-        },
-        {
-          label:
-            lang === "id" ? "Pengurangan Waktu Henti" : "Downtime Reduction",
-          value: 22,
-          suffix: "%",
-        },
-        {
-          label: lang === "id" ? "Titik Data/Detik" : "Data Points/Sec",
-          value: 50,
-          suffix: "k+",
-        },
-      ],
     },
     {
       id: "p2",
@@ -161,7 +143,189 @@ export function Projects({ id, lang }: { id?: string; lang: "id" | "en" }) {
         }
       });
     }
-  }, []);
+
+    if (selectedProject) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [selectedProject]);
+
+  // Ini adalah blok konten Modal yang akan di-"Portal"-kan ke Root HTML
+  const modalContent = (
+    <AnimatePresence>
+      {selectedProject && (
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 lg:p-8">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 bg-gray-900/70 dark:bg-black/80 backdrop-blur-md"
+            onClick={() => setSelectedProject(null)}
+          />
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            /* PERBAIKAN: 
+               1. max-w-5xl dikecilkan jadi max-w-4xl 
+               2. Scrollbar tebal di-custom menjadi tipis & transparan
+            */
+            className="relative bg-white dark:bg-[#0a0a0a] w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-2xl sm:rounded-3xl shadow-2xl border border-gray-200 dark:border-white/10 flex flex-col [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-gray-700 [&::-webkit-scrollbar-thumb]:rounded-full"
+          >
+            <button
+              onClick={() => setSelectedProject(null)}
+              className="absolute top-4 right-4 sm:top-5 sm:right-5 z-50 p-1.5 sm:p-2 rounded-full bg-white/70 dark:bg-black/50 text-gray-900 dark:text-white backdrop-blur-md hover:bg-white dark:hover:bg-black hover:scale-110 transition-all shadow-sm border border-gray-200 dark:border-white/10"
+            >
+              <span className="material-icons text-lg sm:text-xl">close</span>
+            </button>
+
+            {/* PERBAIKAN: Tinggi gambar diturunkan drastis agar tidak memenuhi layar */}
+            <div className="relative h-40 sm:h-56 md:h-64 w-full shrink-0">
+              <img
+                src={selectedProject.image}
+                alt={selectedProject.title}
+                className="w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-white via-white/20 to-transparent dark:from-[#0a0a0a] dark:via-[#0a0a0a]/20"></div>
+            </div>
+
+            {/* Area Konten: Padding sedikit dikurangi agar lebih proporsional */}
+            <div className="p-5 sm:p-8 md:p-10 -mt-12 sm:-mt-16 relative z-10 flex-grow">
+              <div className="flex flex-wrap gap-2 mb-4">
+                {selectedProject.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full bg-white dark:bg-[#1a1a1a] text-[#b026ff] dark:text-[#00f0ff] border border-[#b026ff]/20 dark:border-[#00f0ff]/20 shadow-sm uppercase tracking-wider"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              {/* PERBAIKAN: Ukuran font judul dikecilkan agar lebih rapi */}
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-6 sm:mb-8 tracking-tight text-gray-900 dark:text-white leading-tight">
+                {selectedProject.title}
+              </h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="md:col-span-2 space-y-6">
+                  {[
+                    {
+                      icon: "info",
+                      title: lang === "id" ? "Ikhtisar" : "Overview",
+                      content: selectedProject.description,
+                    },
+                    {
+                      icon: "warning",
+                      title: lang === "id" ? "Tantangan" : "Challenge",
+                      content: selectedProject.challenge,
+                    },
+                    {
+                      icon: "lightbulb",
+                      title: lang === "id" ? "Solusi" : "Solution",
+                      content: selectedProject.solution,
+                    },
+                    {
+                      icon: "emoji_events",
+                      title: lang === "id" ? "Hasil" : "Outcome",
+                      content: selectedProject.outcome,
+                    },
+                  ].map(
+                    (section, idx) =>
+                      section.content && (
+                        <div key={idx} className="group">
+                          <h3 className="text-lg font-bold mb-2 flex items-center gap-2 text-gray-900 dark:text-white">
+                            <span className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#b026ff]/10 dark:bg-[#00f0ff]/10 text-[#b026ff] dark:text-[#00f0ff]">
+                              <span className="material-icons text-base">
+                                {section.icon}
+                              </span>
+                            </span>
+                            {section.title}
+                          </h3>
+                          <p className="text-justify text-gray-600 dark:text-gray-400 leading-relaxed font-light text-sm sm:text-base pl-9">
+                            {section.content}
+                          </p>
+                        </div>
+                      ),
+                  )}
+                </div>
+
+                <div className="space-y-6">
+                  <div className="bg-gray-50 dark:bg-[#111] rounded-2xl p-5 border border-gray-100 dark:border-white/5 shadow-sm">
+                    <h3 className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+                      <span className="material-icons text-sm">assignment</span>
+                      {lang === "id" ? "Detail Proyek" : "Project Details"}
+                    </h3>
+                    <ul className="space-y-4">
+                      {selectedProject.role && (
+                        <li className="flex flex-col">
+                          <span className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wider">
+                            {lang === "id" ? "Peran" : "Role"}
+                          </span>
+                          <span className="font-semibold text-sm text-gray-900 dark:text-white">
+                            {selectedProject.role}
+                          </span>
+                        </li>
+                      )}
+                      {selectedProject.duration && (
+                        <li className="flex flex-col">
+                          <span className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wider">
+                            {lang === "id" ? "Durasi" : "Duration"}
+                          </span>
+                          <span className="font-semibold text-sm text-gray-900 dark:text-white">
+                            {selectedProject.duration}
+                          </span>
+                        </li>
+                      )}
+                    </ul>
+                  </div>
+
+                  {(selectedProject.link || selectedProject.github) && (
+                    <div className="flex flex-col gap-3">
+                      {selectedProject.link && (
+                        <a
+                          href={selectedProject.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-gradient-to-r from-[#b026ff] to-[#8000ff] dark:from-[#00f0ff] dark:to-[#0080ff] text-white font-bold text-sm transition-all hover:shadow-[0_0_20px_rgba(176,38,255,0.4)] dark:hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:-translate-y-1"
+                        >
+                          <span className="material-icons text-sm transition-transform group-hover:scale-110">
+                            open_in_new
+                          </span>
+                          {lang === "id" ? "Kunjungi Situs" : "Visit Site"}
+                        </a>
+                      )}
+                      {selectedProject.github && (
+                        <a
+                          href={selectedProject.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-white dark:bg-[#111] text-gray-900 dark:text-white font-bold text-sm transition-all hover:shadow-md border border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-white/20 hover:-translate-y-1"
+                        >
+                          <span className="material-icons text-sm transition-transform group-hover:scale-110">
+                            code
+                          </span>
+                          {lang === "id" ? "Lihat Kode" : "View Code"}
+                        </a>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  );
 
   return (
     <section
@@ -180,10 +344,9 @@ export function Projects({ id, lang }: { id?: string; lang: "id" | "en" }) {
         </p>
       </div>
 
-      {/* Featured Projects Carousel */}
+      {/* Featured Projects Carousel (Tidak Diubah) */}
       {featuredProjects.length > 0 && (
         <div className="mb-12 sm:mb-16 relative rounded-2xl sm:rounded-3xl overflow-hidden bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none group">
-          {/* Penyesuaian min-h di mobile agar konten tidak bertumpuk */}
           <div className="relative h-[70vh] min-h-[500px] sm:min-h-[400px] max-h-[600px] w-full overflow-hidden">
             <AnimatePresence initial={false} mode="wait">
               <motion.div
@@ -194,7 +357,6 @@ export function Projects({ id, lang }: { id?: string; lang: "id" | "en" }) {
                 transition={{ duration: 0.4, ease: "easeInOut" }}
                 className="absolute inset-0 flex flex-col lg:flex-row"
               >
-                {/* Gambar: di mobile ambil 45% tinggi agar proporsional, desktop tetap full */}
                 <div
                   className="w-full lg:w-1/2 h-[45%] lg:h-full relative overflow-hidden cursor-pointer shrink-0"
                   onClick={() =>
@@ -216,7 +378,6 @@ export function Projects({ id, lang }: { id?: string; lang: "id" | "en" }) {
                   </div>
                 </div>
 
-                {/* Teks: di mobile ambil 55% tinggi, padding disesuaikan untuk mobile */}
                 <div className="w-full lg:w-1/2 h-[55%] lg:h-full p-5 sm:p-8 lg:p-12 flex flex-col justify-center bg-white dark:bg-transparent relative">
                   <h3
                     className="text-xl sm:text-3xl lg:text-4xl font-display font-bold mb-2 sm:mb-4 text-gray-900 dark:text-white cursor-pointer hover:text-[#b026ff] dark:hover:text-[#00f0ff] transition-colors"
@@ -256,7 +417,6 @@ export function Projects({ id, lang }: { id?: string; lang: "id" | "en" }) {
               </motion.div>
             </AnimatePresence>
 
-            {/* Carousel Controls - Posisi top disesuaikan di mobile agar pas di atas gambar (22%), desktop tetap tengah (1/2) */}
             {featuredProjects.length > 1 && (
               <>
                 <button
@@ -291,7 +451,7 @@ export function Projects({ id, lang }: { id?: string; lang: "id" | "en" }) {
         </div>
       )}
 
-      {/* Regular Projects Grid */}
+      {/* Regular Projects Grid (Tidak Diubah) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
         {regularProjects.map((project) => (
           <div
@@ -307,13 +467,7 @@ export function Projects({ id, lang }: { id?: string; lang: "id" | "en" }) {
                 className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
                 referrerPolicy="no-referrer"
               />
-              {project.featured && (
-                <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 bg-[#b026ff] text-white text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">
-                  {lang === "id" ? "Unggulan" : "Featured"}
-                </div>
-              )}
             </div>
-            {/* Padding disesuaikan lebih kecil di mobile */}
             <div className="p-4 sm:p-6 lg:p-8 flex flex-col flex-grow relative bg-white dark:bg-transparent">
               <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-gray-200 dark:via-white/20 to-transparent transform -translate-y-1/2"></div>
               <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-1.5 sm:mb-3 group-hover:text-[#b026ff] dark:group-hover:text-[#00f0ff] transition-colors duration-300 line-clamp-2">
@@ -342,169 +496,9 @@ export function Projects({ id, lang }: { id?: string; lang: "id" | "en" }) {
         ))}
       </div>
 
-      {/* Modal View */}
-      {selectedProject && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6">
-          <div
-            className="absolute inset-0 bg-gray-900/40 dark:bg-black/60 backdrop-blur-sm transition-opacity"
-            onClick={() => setSelectedProject(null)}
-          ></div>
-          <div className="relative bg-white dark:bg-[#111] w-full max-w-4xl max-h-[92vh] sm:max-h-[90vh] overflow-y-auto rounded-2xl sm:rounded-3xl shadow-2xl border border-gray-200 dark:border-white/10 flex flex-col animate-in fade-in zoom-in-95 duration-300">
-            <button
-              onClick={() => setSelectedProject(null)}
-              className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 p-1.5 sm:p-2 rounded-full bg-black/20 dark:bg-white/10 text-white dark:text-white hover:bg-black/40 dark:hover:bg-white/20 transition-colors"
-            >
-              <span className="material-icons text-sm sm:text-base">close</span>
-            </button>
-
-            {/* Tinggi gambar di mobile dikurangi sedikit agar konten detail lebih mudah terbaca */}
-            <div className="relative h-40 sm:h-64 md:h-80 w-full shrink-0">
-              <img
-                src={selectedProject.image}
-                alt={selectedProject.title}
-                className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-[#111] via-transparent to-transparent"></div>
-            </div>
-
-            {/* Tarikan margin top disesuaikan di mobile agar tidak terlalu rapat */}
-            <div className="p-5 sm:p-8 md:p-10 -mt-10 sm:-mt-20 relative z-10">
-              <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
-                {selectedProject.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-[10px] sm:text-xs font-medium px-2.5 py-1 rounded-full bg-gray-100 dark:bg-white/10 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-white/5 shadow-sm"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              <h2 className="text-xl sm:text-3xl md:text-4xl font-display font-bold mb-4 sm:mb-6 tracking-tight text-gray-900 dark:text-white leading-tight">
-                {selectedProject.title}
-              </h2>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-10">
-                <div className="md:col-span-2 space-y-5 sm:space-y-6">
-                  <div>
-                    <h3 className="text-base sm:text-lg font-bold mb-2 flex items-center gap-2 text-gray-900 dark:text-white">
-                      <span className="material-icons text-[#b026ff] dark:text-[#00f0ff] text-lg sm:text-xl">
-                        info
-                      </span>
-                      {lang === "id" ? "Ikhtisar" : "Overview"}
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-400 leading-relaxed font-light text-sm sm:text-base">
-                      {selectedProject.description}
-                    </p>
-                  </div>
-
-                  {selectedProject.challenge && (
-                    <div>
-                      <h3 className="text-base sm:text-lg font-bold mb-2 flex items-center gap-2 text-gray-900 dark:text-white">
-                        <span className="material-icons text-[#b026ff] dark:text-[#00f0ff] text-lg sm:text-xl">
-                          warning
-                        </span>
-                        {lang === "id" ? "Tantangan" : "Challenge"}
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-400 leading-relaxed font-light text-sm sm:text-base">
-                        {selectedProject.challenge}
-                      </p>
-                    </div>
-                  )}
-
-                  {selectedProject.solution && (
-                    <div>
-                      <h3 className="text-base sm:text-lg font-bold mb-2 flex items-center gap-2 text-gray-900 dark:text-white">
-                        <span className="material-icons text-[#b026ff] dark:text-[#00f0ff] text-lg sm:text-xl">
-                          lightbulb
-                        </span>
-                        {lang === "id" ? "Solusi" : "Solution"}
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-400 leading-relaxed font-light text-sm sm:text-base">
-                        {selectedProject.solution}
-                      </p>
-                    </div>
-                  )}
-
-                  {selectedProject.outcome && (
-                    <div>
-                      <h3 className="text-base sm:text-lg font-bold mb-2 flex items-center gap-2 text-gray-900 dark:text-white">
-                        <span className="material-icons text-[#b026ff] dark:text-[#00f0ff] text-lg sm:text-xl">
-                          emoji_events
-                        </span>
-                        {lang === "id" ? "Hasil" : "Outcome"}
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-400 leading-relaxed font-light text-sm sm:text-base">
-                        {selectedProject.outcome}
-                      </p>
-                    </div>
-                  )}
-                </div>
-
-                <div className="space-y-5 sm:space-y-6">
-                  <div className="bg-gray-50 dark:bg-white/5 rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-gray-200 dark:border-white/10">
-                    <h3 className="text-xs sm:text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-3 sm:mb-4">
-                      {lang === "id" ? "Detail Proyek" : "Project Details"}
-                    </h3>
-                    <ul className="space-y-3 sm:space-y-4">
-                      {selectedProject.role && (
-                        <li>
-                          <span className="block text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-0.5 sm:mb-1">
-                            {lang === "id" ? "Peran" : "Role"}
-                          </span>
-                          <span className="font-medium text-xs sm:text-sm text-gray-900 dark:text-white">
-                            {selectedProject.role}
-                          </span>
-                        </li>
-                      )}
-                      {selectedProject.duration && (
-                        <li>
-                          <span className="block text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-0.5 sm:mb-1">
-                            {lang === "id" ? "Durasi" : "Duration"}
-                          </span>
-                          <span className="font-medium text-xs sm:text-sm text-gray-900 dark:text-white">
-                            {selectedProject.duration}
-                          </span>
-                        </li>
-                      )}
-                    </ul>
-                  </div>
-
-                  {(selectedProject.link || selectedProject.github) && (
-                    <div className="flex flex-col gap-2.5 sm:gap-3">
-                      {selectedProject.link && (
-                        <a
-                          href={selectedProject.link}
-                          target="_blank"
-                          className="flex items-center justify-center gap-2 w-full py-2.5 sm:py-3 rounded-lg sm:rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold text-xs sm:text-sm transition-transform hover:scale-105 shadow-md"
-                        >
-                          <span className="material-icons text-xs sm:text-sm">
-                            open_in_new
-                          </span>
-                          {lang === "id" ? "Kunjungi Situs" : "Visit Site"}
-                        </a>
-                      )}
-                      {selectedProject.github && (
-                        <a
-                          href={selectedProject.github}
-                          target="_blank"
-                          className="flex items-center justify-center gap-2 w-full py-2.5 sm:py-3 rounded-lg sm:rounded-xl bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white font-bold text-xs sm:text-sm transition-transform hover:scale-105 border border-gray-200 dark:border-white/10"
-                        >
-                          <span className="material-icons text-xs sm:text-sm">
-                            code
-                          </span>
-                          {lang === "id" ? "Lihat Kode" : "View Code"}
-                        </a>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Render Modal menggunakan CreatePortal agar selalu tampil penuh di layar teratas */}
+      {typeof document !== "undefined" &&
+        createPortal(modalContent, document.body)}
     </section>
   );
 }

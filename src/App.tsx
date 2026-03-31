@@ -266,7 +266,7 @@ export default function App() {
         {/* Mobile Top Bar */}
         <nav className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-[#050505]/80 backdrop-blur-xl px-4 sm:px-6 py-3 border-b border-gray-200 dark:border-white/10 flex items-center justify-between transition-colors duration-500 shadow-sm">
           <span className="font-display font-bold text-lg sm:text-xl tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400">
-            Fachri
+            Fachri Ramdhan
           </span>
           <div className="flex items-center gap-1 sm:gap-2">
             <button

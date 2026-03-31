@@ -98,6 +98,6 @@ Proyek ini dilisensikan di bawah [MIT License](LICENSE). Hak cipta © Fachri.
 
 ## 📬 Kontak
 
-- **Email:** fachrirahman2000@gmail.com
-- **LinkedIn:** [Profil LinkedIn Anda](https://linkedin.com)
-- **GitHub:** [Profil GitHub Anda](https://github.com)
+- **Email:** fachriramdhan04@gmail.com
+- **LinkedIn:** [Profil LinkedIn Anda](https://linkedin.com/in/fachriramdhan)
+- **GitHub:** [Profil GitHub Anda](https://github.com/fachriramdhan)

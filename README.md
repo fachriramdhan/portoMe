@@ -8,7 +8,7 @@
 
 Selamat datang di repositori kode sumber untuk situs web portofolio pribadi saya. Aplikasi web premium ini dibangun untuk menampilkan proyek, pengalaman, dan keahlian saya dalam menjembatani kesenjangan antara perangkat lunak berkinerja tinggi dan sistem otomasi industri.
 
-🔗 **[Lihat Demo Langsung] (Masukkan URL Live Demo Anda di sini)**
+🔗 **[Lihat Demo Langsung] [(Masukkan URL Live Demo Anda di sini)](https://fachriramdhan.vercel.app/)**
 
 ---
 

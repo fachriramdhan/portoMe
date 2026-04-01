@@ -117,62 +117,107 @@ export default function App() {
 
         {/* Left Sidebar */}
         <header className="lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-[45%] xl:w-[40%] lg:flex-col lg:justify-between lg:py-16 lg:pl-24 lg:pr-16 pt-32 pb-12 px-6 sm:px-8 z-10 lg:overflow-hidden no-scrollbar">
-          <div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-display font-black tracking-tighter mb-2 lg:mb-4 text-transparent bg-clip-text bg-gradient-to-br from-gray-900 via-gray-800 to-gray-500 dark:from-white dark:via-gray-200 dark:to-gray-500 leading-tight py-2">
-              Fachri Ramdhan
-            </h1>
-            <h2 className="text-base sm:text-lg lg:text-xl xl:text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#b026ff] to-[#00f0ff] mb-4 lg:mb-6 tracking-wide">
-              Software Engineering
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400 max-w-md leading-relaxed font-light text-sm sm:text-base lg:text-base xl:text-lg transition-colors duration-500 mb-5">
-              {lang === "id"
-                ? "Saya membangun aplikasi web premium dan mengintegrasikannya secara mulus dengan otomasi industri. Perangkat lunak berkinerja tinggi bertemu dengan sistem pabrik yang tangguh."
-                : "I build premium web applications and seamlessly integrate them with industrial automation. High-performance software meets robust factory systems."}
-            </p>
+          <div className="relative flex flex-col">
+            {/* Container Utama dengan Garis Vertikal Dinamis */}
+            <div className="relative pl-0 sm:pl-10">
+              {/* Garis Vertikal Utama - Menyesuaikan tinggi konten secara otomatis */}
+              <div className="absolute left-4 top-4 bottom-10 w-px bg-gradient-to-b from-gray-300 via-gray-300 to-transparent dark:from-gray-700 dark:via-gray-700 hidden sm:block"></div>
 
-            <div className="flex flex-wrap gap-2 mb-6 lg:mb-8 max-w-md">
-              <span className="px-3 py-1.5 text-[10px] sm:text-xs font-medium rounded-full bg-green-100 text-green-700 dark:bg-green-500/10 dark:text-green-400 border border-green-200 dark:border-green-500/20 flex items-center gap-1.5 w-max">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+              {/* Bagian Nama & Icon Folder */}
+              <div className="relative flex items-center gap-3 mb-2 group/title">
+                {/* Garis Horizontal ke Icon Folder */}
+                <div className="absolute -left-6 w-6 h-px bg-gray-300 dark:bg-gray-700 hidden sm:block"></div>
+
+                <span className="material-icons text-gray-400 dark:text-gray-500 hidden sm:block transition-colors duration-300 group-hover/title:text-[#b026ff]">
+                  folder_open
                 </span>
-                Open to Work
-              </span>
-              <span className="px-3 py-1.5 text-[10px] sm:text-xs font-medium rounded-full bg-blue-100 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20 flex items-center gap-1.5 w-max">
-                🤝 {lang === "id" ? "Kolaborasi" : "Collaboration"}
-              </span>
-              <span className="px-3 py-1.5 text-[10px] sm:text-xs font-medium rounded-full bg-purple-100 text-purple-700 dark:bg-purple-500/10 dark:text-purple-400 border border-purple-200 dark:border-purple-500/20 flex items-center gap-1.5 w-max">
-                🚀 {lang === "id" ? "Proyek Kustom" : "Custom Projects"}
-              </span>
-            </div>
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-display font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-gray-900 via-gray-800 to-gray-500 dark:from-white dark:via-gray-200 dark:to-gray-500 leading-tight py-1">
+                  Fachri Ramdhan
+                </h1>
+              </div>
 
-            <a
-              href="/assets/cv-fachri.pdf"
-              download="CV_Fachri_SoftwareEngineer.pdf"
-              className="group relative inline-flex items-center justify-center gap-3 px-6 py-3 lg:px-6 lg:py-3 xl:px-8 xl:py-4 rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold text-xs lg:text-xs xl:text-sm tracking-widest uppercase overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(176,38,255,0.3)] dark:hover:shadow-[0_0_40px_rgba(0,240,255,0.3)] w-max"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-[#b026ff] to-[#00f0ff] opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-              <span className="material-icons scale-90 transition-transform duration-300 group-hover:-translate-y-1">
-                download
-              </span>
-              <span className="relative z-10">
-                {lang === "id" ? "Unduh CV" : "Download CV"}
-              </span>
-            </a>
+              {/* Bagian Badge Software Engineering - Posisinya sekarang relatif terhadap konten di atasnya */}
+              <motion.div
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+                className="relative flex items-center gap-3 mb-6 mt-4"
+              >
+                {/* Garis Horizontal ke Badge */}
+                <div className="absolute -left-6 w-6 h-px bg-gray-300 dark:bg-gray-700 hidden sm:block"></div>
+
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white dark:bg-white/5 border border-gray-200/50 dark:border-white/5 shadow-sm backdrop-blur-md relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#b026ff]/10 to-[#00f0ff]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00f0ff] opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#b026ff]"></span>
+                  </span>
+                  <h2 className="text-xs sm:text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#b026ff] to-[#00f0ff] tracking-wider uppercase relative z-10">
+                    Software Engineering
+                  </h2>
+                </div>
+              </motion.div>
+
+              {/* Deskripsi Singkat */}
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="text-gray-600 dark:text-gray-400 max-w-md leading-relaxed font-light text-sm sm:text-base lg:text-base xl:text-lg transition-colors duration-500 mb-8 text-justify"
+              >
+                {lang === "id"
+                  ? "Saya membangun aplikasi web premium dan mengintegrasikannya secara mulus dengan otomasi industri. Perangkat lunak berkinerja tinggi bertemu dengan sistem pabrik yang tangguh."
+                  : "I build premium web applications and seamlessly integrate them with industrial automation. High-performance software meets robust factory systems."}
+              </motion.p>
+
+              {/* Status Badges & Action Buttons */}
+              <div className="flex flex-col gap-8">
+                <div className="flex flex-wrap gap-2 max-w-md">
+                  <span className="px-3 py-1.5 text-[10px] sm:text-xs font-medium rounded-full bg-green-100 text-green-700 dark:bg-green-500/10 dark:text-green-400 border border-green-200 dark:border-green-500/20 flex items-center gap-1.5 w-max">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                    Open to Work
+                  </span>
+                  <span className="px-3 py-1.5 text-[10px] sm:text-xs font-medium rounded-full bg-blue-100 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20 flex items-center gap-1.5 w-max hover:scale-105 transition-transform cursor-default">
+                    🤝 {lang === "id" ? "Kolaborasi" : "Collaboration"}
+                  </span>
+                  <span className="px-3 py-1.5 text-[10px] sm:text-xs font-medium rounded-full bg-purple-100 text-purple-700 dark:bg-purple-500/10 dark:text-purple-400 border border-purple-200 dark:border-purple-500/20 flex items-center gap-1.5 w-max hover:scale-105 transition-transform cursor-default">
+                    🚀 {lang === "id" ? "Proyek Kustom" : "Custom Projects"}
+                  </span>
+                </div>
+
+                <a
+                  href="/assets/cv-fachri.pdf"
+                  download="CV_Fachri_SoftwareEngineer.pdf"
+                  className="group relative inline-flex items-center justify-center gap-3 px-6 py-3 lg:px-6 lg:py-3 xl:px-8 xl:py-4 rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold text-xs lg:text-xs xl:text-sm tracking-widest uppercase overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(176,38,255,0.3)] dark:hover:shadow-[0_0_40px_rgba(0,240,255,0.3)] w-max"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#b026ff] to-[#00f0ff] opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                  <span className="material-icons scale-90 transition-transform duration-300 group-hover:-translate-y-1">
+                    download
+                  </span>
+                  <span className="relative z-10">
+                    {lang === "id" ? "Unduh CV" : "Download CV"}
+                  </span>
+                </a>
+              </div>
+            </div>
           </div>
 
-          <div className="mt-8 lg:mt-auto flex items-center gap-4 xl:gap-6">
+          {/* Social Media & Settings Bar */}
+          <div className="mt-12 lg:mt-auto flex items-center gap-4 xl:gap-6 flex-wrap">
             <a
               href="https://github.com/fachriramdhan"
               target="_blank"
               rel="noreferrer"
               title="GitHub"
-              className="text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors hover:scale-110 transform duration-300"
+              className="text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all hover:scale-125 duration-300"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
+                width="22"
+                height="22"
                 viewBox="0 0 24 24"
                 fill="currentColor"
               >
@@ -180,16 +225,16 @@ export default function App() {
               </svg>
             </a>
             <a
-              href="https://linkedin.com/fachriramdhan"
+              href="https://linkedin.com/in/fachriramdhan"
               target="_blank"
               rel="noreferrer"
               title="LinkedIn"
-              className="text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors hover:scale-110 transform duration-300"
+              className="text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all hover:scale-125 duration-300"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
+                width="22"
+                height="22"
                 viewBox="0 0 24 24"
                 fill="currentColor"
               >
@@ -197,69 +242,32 @@ export default function App() {
               </svg>
             </a>
             <a
-              href="https://instagram.com/fachriramdhano"
-              target="_blank"
-              rel="noreferrer"
-              title="Instagram"
-              className="text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors hover:scale-110 transform duration-300"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-              </svg>
-            </a>
-            <a
-              href="https://wa.me/6281775117906"
-              target="_blank"
-              rel="noreferrer"
-              title="WhatsApp"
-              className="text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors hover:scale-110 transform duration-300"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.347-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.876 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-              </svg>
-            </a>
-            <a
               href="mailto:fachriramdhan04@gmail.com"
               title="Email"
-              className="text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors hover:scale-110 transform duration-300"
+              className="text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all hover:scale-125 duration-300"
             >
               <span className="material-icons">mail</span>
             </a>
+
             <div className="w-px h-6 bg-gray-200 dark:bg-white/10 mx-1 hidden lg:block"></div>
-            <button
-              onClick={toggleLanguage}
-              className="hidden lg:flex p-2 rounded-full bg-gray-200/50 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-white/10 transition-all duration-300 items-center justify-center hover:scale-110 font-bold text-xs w-10 h-10"
-              aria-label={
-                lang === "id"
-                  ? "Ganti ke Bahasa Inggris"
-                  : "Switch to Indonesian"
-              }
-            >
-              {lang === "id" ? "EN" : "ID"}
-            </button>
-            <button
-              onClick={toggleTheme}
-              className="hidden lg:flex p-2 rounded-full bg-gray-200/50 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-white/10 transition-all duration-300 items-center justify-center hover:scale-110 w-10 h-10"
-              aria-label={
-                lang === "id" ? "Ganti Mode Gelap" : "Toggle Dark Mode"
-              }
-            >
-              <span className="material-icons scale-90">
-                {isDarkMode ? "light_mode" : "dark_mode"}
-              </span>
-            </button>
+
+            {/* Theme & Language Toggles */}
+            <div className="hidden lg:flex items-center gap-2">
+              <button
+                onClick={toggleLanguage}
+                className="p-2 rounded-xl bg-gray-200/50 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-white/10 transition-all duration-300 flex items-center justify-center hover:scale-110 font-bold text-[10px] w-9 h-9 border border-transparent hover:border-[#b026ff]/30"
+              >
+                {lang === "id" ? "EN" : "ID"}
+              </button>
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-xl bg-gray-200/50 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-white/10 transition-all duration-300 flex items-center justify-center hover:scale-110 w-9 h-9 border border-transparent hover:border-[#00f0ff]/30"
+              >
+                <span className="material-icons text-[18px]">
+                  {isDarkMode ? "light_mode" : "dark_mode"}
+                </span>
+              </button>
+            </div>
           </div>
         </header>
 

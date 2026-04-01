@@ -1,5 +1,5 @@
 {
-  "name": "ai-studio-angular-app",
+  "name": "fachriramdhan",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite --port 3000 --host 0.0.0.0",

@@ -353,11 +353,7 @@ export function Projects({ id, lang }: { id?: string; lang: "id" | "en" }) {
               {lang === "id" ? "Proyek" : "Projects"}
             </h2>
           </div>
-          <p className="text-gray-600 dark:text-gray-400 max-w-xl text-sm font-light transition-colors duration-500">
-            {lang === "id"
-              ? "Pilihan proyek terbaru saya di bidang pengembangan web dan otomasi industri."
-              : "A selection of my recent projects in web development and industrial automation."}
-          </p>
+          
         </div>
 
         {/* Tombol Slide dan Teks Petunjuk (Ditampilkan jika lebih dari 6 proyek) */}
@@ -383,7 +379,7 @@ export function Projects({ id, lang }: { id?: string; lang: "id" | "en" }) {
             </div>
             {/* Teks Petunjuk Geser */}
             <span className="text-[10px] text-gray-400 dark:text-gray-500 uppercase tracking-widest font-semibold">
-              {lang === "id" ? "Geser / Swipe" : "Slide / Swipe"}
+              {lang === "id" ? "Geser" : "Slide"}
             </span>
           </div>
         )}

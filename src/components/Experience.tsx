@@ -50,20 +50,16 @@ export function Experience({ id, lang }: { id?: string; lang: "id" | "en" }) {
       className="scroll-mt-28 lg:scroll-mt-64 block"
     >
       {/* Header Section */}
-      <div className="mb-8 sm:mb-12">
+      <div className="mb-5 sm:mb-8">
         <div className="flex items-center gap-3 mb-3">
           <span className="material-icons text-2xl text-[#b026ff] dark:text-[#00f0ff]">
             work_history
           </span>
           <h2 className="text-2xl md:text-4xl font-display font-bold tracking-tight text-gray-900 dark:text-white">
-            {lang === "id" ? "Pengalaman" : "Experience"}
+            {lang === "id" ? "Pengalaman Saya" : "My Experience"}
           </h2>
         </div>
-        <p className="text-gray-600 dark:text-gray-400 max-w-xl text-sm md:text-base font-light transition-colors duration-500">
-          {lang === "id"
-            ? "Perjalanan profesional saya dalam rekayasa perangkat lunak dan IoT."
-            : "My professional journey in software engineering and IoT."}
-        </p>
+       
       </div>
 
       {/* Timeline Container */}

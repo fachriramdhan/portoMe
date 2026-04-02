@@ -78,9 +78,9 @@ export function Certificates({ id, lang }: { id?: string; lang: "id" | "en" }) {
       className="scroll-mt-28 lg:scroll-mt-64 block"
     >
       {/* Bagian Header & Tombol Navigasi */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-4">
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-5 sm:mb-8 gap-4">
         <div>
-          <div className="flex items-center gap-3 mb-3">
+          <div className="flex items-center gap-3 mb-2">
             <span className="material-icons text-2xl text-[#b026ff] dark:text-[#00f0ff]">
               workspace_premium
             </span>
@@ -88,11 +88,6 @@ export function Certificates({ id, lang }: { id?: string; lang: "id" | "en" }) {
               {lang === "id" ? "Sertifikasi" : "Certificates"}
             </h2>
           </div>
-          <p className="text-gray-600 dark:text-gray-400 max-w-xl text-sm font-light transition-colors duration-500">
-            {lang === "id"
-              ? "Sertifikasi profesional dan pencapaian yang saya peroleh."
-              : "Professional certifications and achievements I have earned."}
-          </p>
         </div>
 
         {/* Tombol Slide (Ditampilkan jika lebih dari 4 sertifikat) */}
@@ -116,10 +111,7 @@ export function Certificates({ id, lang }: { id?: string; lang: "id" | "en" }) {
         )}
       </div>
 
-      {/* Container Slider Grid 2x2 
-        Kuncinya ada di: grid-rows-2 dan grid-flow-col
-        auto-cols mengatur lebarnya agar muat 2 kolom di layar (calc 50% - gap)
-      */}
+      {/* Container Slider Grid 2x2 */}
       <div
         ref={sliderRef}
         className="grid grid-rows-2 grid-flow-col auto-cols-[85vw] sm:auto-cols-[calc(50%-12px)] gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-6 -mx-4 px-4 sm:mx-0 sm:px-0"
@@ -130,7 +122,8 @@ export function Certificates({ id, lang }: { id?: string; lang: "id" | "en" }) {
             href={cert.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="cert-item opacity-0 group flex items-center gap-4 p-4 sm:p-5 rounded-2xl bg-white/70 dark:bg-[#111111]/70 backdrop-blur-md border border-gray-200/80 dark:border-white/10 hover:border-[#b026ff]/50 dark:hover:border-[#00f0ff]/50 transition-all duration-300 hover:shadow-[0_8px_30px_-5px_rgba(176,38,255,0.2)] dark:hover:shadow-[0_8px_30px_-5px_rgba(0,240,255,0.2)] hover:-translate-y-1 relative overflow-hidden flex-shrink-0 snap-start h-[100px]"
+            // hover:-translate-y-1 DIHAPUS DARI SINI
+            className="cert-item opacity-0 group flex items-center gap-4 p-4 sm:p-5 rounded-2xl bg-white/70 dark:bg-[#111111]/70 backdrop-blur-md border border-gray-200/80 dark:border-white/10 hover:border-[#b026ff]/50 dark:hover:border-[#00f0ff]/50 transition-all duration-300 hover:shadow-[0_8px_30px_-5px_rgba(176,38,255,0.2)] dark:hover:shadow-[0_8px_30px_-5px_rgba(0,240,255,0.2)] relative overflow-hidden flex-shrink-0 snap-start h-[100px]"
           >
             {/* Ambient Hover Effect */}
             <div className="absolute inset-0 bg-gradient-to-r from-[#b026ff]/5 to-[#00f0ff]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>

@@ -8,7 +8,7 @@ export function Skills({ id, lang }: { id?: string; lang: "id" | "en" }) {
   const skillCategories = [
     {
       id: "web",
-      title: lang === "id" ? "Pengembangan Web" : "Web Development",
+      title: lang === "id" ? "Web Development" : "Web Development",
       icon: "fas fa-laptop-code",
       skills: [
         { name: "ASP.NET Core", icon: "fab fa-microsoft" },
@@ -21,7 +21,7 @@ export function Skills({ id, lang }: { id?: string; lang: "id" | "en" }) {
     },
     {
       id: "database",
-      title: lang === "id" ? "Basis Data" : "Database",
+      title: lang === "id" ? "Database" : "Database",
       icon: "fas fa-database",
       skills: [
         { name: "MySQL", icon: "fas fa-server" },
@@ -71,11 +71,7 @@ export function Skills({ id, lang }: { id?: string; lang: "id" | "en" }) {
             {lang === "id" ? "Gudang Teknis" : "Technical Arsenal"}
           </h2>
         </div>
-        <p className="text-gray-600 dark:text-gray-400 max-w-xl text-sm font-light transition-colors duration-500">
-          {lang === "id"
-            ? "Kumpulan teknologi dan alat yang saya gunakan untuk membangun solusi digital yang tangguh, terukur, dan terintegrasi."
-            : "A collection of technologies and tools I use to build robust, scalable, and integrated digital solutions."}
-        </p>
+        
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 items-stretch">

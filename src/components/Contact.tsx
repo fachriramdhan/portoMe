@@ -16,6 +16,7 @@ export function Contact({ id, lang }: { id?: string; lang: "id" | "en" }) {
     {
       name: "GitHub",
       url: "https://github.com/fachriramdhan",
+      color: "text-gray-900 dark:text-white",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -31,6 +32,7 @@ export function Contact({ id, lang }: { id?: string; lang: "id" | "en" }) {
     {
       name: "LinkedIn",
       url: "https://linkedin.com/in/fachriramdhan",
+      color: "text-[#0A66C2]",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -46,6 +48,7 @@ export function Contact({ id, lang }: { id?: string; lang: "id" | "en" }) {
     {
       name: "Instagram",
       url: "https://instagram.com/fachriramdhan",
+      color: "text-[#E4405F]",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -61,6 +64,7 @@ export function Contact({ id, lang }: { id?: string; lang: "id" | "en" }) {
     {
       name: "WhatsApp",
       url: "https://wa.me/6281775117906",
+      color: "text-[#25D366]",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -128,8 +132,11 @@ export function Contact({ id, lang }: { id?: string; lang: "id" | "en" }) {
             {/* Email Button */}
             <button
               onClick={handleCopyEmail}
-              className="group relative flex items-center gap-3 px-6 sm:px-10 py-4 rounded-2xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold transition-all duration-500 hover:scale-105 active:scale-95"
+              className="group relative overflow-hidden flex items-center gap-3 px-6 sm:px-10 py-4 rounded-2xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold transition-all duration-500 hover:scale-105 active:scale-95"
             >
+              <span className="material-icons text-[18px]">
+                {isCopied ? "check" : "content_copy"}
+              </span>
               <span className="text-xs sm:text-sm tracking-widest uppercase">
                 {isCopied
                   ? lang === "id"
@@ -149,7 +156,9 @@ export function Contact({ id, lang }: { id?: string; lang: "id" | "en" }) {
                   href={social.url}
                   target="_blank"
                   rel="noreferrer"
-                  className="p-4 rounded-2xl bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:text-[#b026ff] dark:hover:text-[#00f0ff] hover:bg-white dark:hover:bg-white/10 border border-transparent hover:border-[#b026ff]/30 dark:hover:border-[#00f0ff]/30 transition-all duration-300 hover:-translate-y-2 shadow-sm"
+                  aria-label={social.name}
+                  title={social.name}
+                  className={`p-4 rounded-2xl bg-gray-100 dark:bg-white/5 ${social.color} hover:bg-white dark:hover:bg-white/10 border border-transparent hover:border-gray-200 dark:hover:border-white/20 transition-all duration-300 hover:-translate-y-2 shadow-sm`}
                 >
                   {social.icon}
                 </a>

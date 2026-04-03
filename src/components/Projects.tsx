@@ -22,90 +22,96 @@ export function Projects({ id, lang }: { id?: string; lang: "id" | "en" }) {
   const sectionRef = useRef<HTMLElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [expandedDesc, setExpandedDesc] = useState<Record<string, boolean>>({});
+
+  const toggleDesc = (e: React.MouseEvent, id: string) => {
+    e.stopPropagation();
+    setExpandedDesc((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
 
   const projects: Project[] = [
     {
       id: "p1",
       title:
-        lang === "id"
-          ? "Dasbor Analitik Rantai Pasokan"
-          : "Supply Chain Analytics Dashboard",
+        lang === "id" ? "Cattle Management System" : "Cattle Management System",
       description:
         lang === "id"
-          ? "Dasbor visualisasi data interaktif yang memberikan wawasan tentang logistik rantai pasokan global, membantu mengidentifikasi kemacetan dan mengoptimalkan rute."
-          : "Interactive data visualization dashboard providing insights into global supply chain logistics, helping identify bottlenecks and optimize routes.",
+          ? "A comprehensive web-based cattle management system built with ASP.NET Core 8.0 and MySQL that streamlines dairy farm operations through real-time health tracking, automated QuestPDF reporting, and interactive Chart.js production analytics within a secure RBAC environment."
+          : "A comprehensive web-based cattle management system built with ASP.NET Core 8.0 and MySQL that streamlines dairy farm operations through real-time health tracking, automated QuestPDF reporting, and interactive Chart.js production analytics within a secure RBAC environment.",
       image: "https://picsum.photos/seed/analytics/800/600?blur=2",
-      tags: ["Angular", "D3.js", "Python", "FastAPI"],
+      tags: ["ASP.Net Core", "SQL Server", "TailwindCSS", "Entity Framework"],
       role: lang === "id" ? "Pengembang Full Stack" : "Full Stack Developer",
       duration: lang === "id" ? "4 Bulan" : "4 Months",
     },
     {
       id: "p2",
-      title:
-        lang === "id"
-          ? "Sistem Manajemen Inventaris"
-          : "Inventory Management System",
+      title: lang === "id" ? "Ramadan Tracker " : "Ramadan Tracker ",
       description:
         lang === "id"
-          ? "Sistem berbasis cloud untuk melacak tingkat inventaris, pesanan, penjualan, dan pengiriman. Termasuk pemindaian barcode dan peringatan stok rendah otomatis."
-          : "Cloud-based system for tracking inventory levels, orders, sales, and deliveries. Includes barcode scanning and automated low-stock alerts.",
+          ? "A comprehensive Ramadan productivity ecosystem that integrates spiritual habit tracking (prayer and Quran progress), financial management with an automated Zakat calculator, and a data-driven dashboard to monitor personal growth through interactive daily statistics and visual consistency charts."
+          : "A comprehensive Ramadan productivity ecosystem that integrates spiritual habit tracking (prayer and Quran progress), financial management with an automated Zakat calculator, and a data-driven dashboard to monitor personal growth through interactive daily statistics and visual consistency charts.",
       image: "https://picsum.photos/seed/inventory/800/600?blur=2",
-      tags: ["React", "TailwindCSS", "Express", "MongoDB"],
+      tags: ["React 18", "TailwindCSS", "Framer Motion", "Vite"],
       github: "#",
     },
     {
       id: "p3",
       title:
         lang === "id"
-          ? "SIM-SAPI (Manajemen Ternak)"
-          : "SIM-SAPI (Cattle Management)",
+          ? "Stock & Tools Management System"
+          : "Stock & Tools Management System",
       description:
         lang === "id"
-          ? "Sistem informasi manajemen untuk peternakan sapi, mencakup pendataan hewan, pelacakan kesehatan, dan efisiensi operasional peternakan."
-          : "Management information system for cattle farming, covering animal data collection, health tracking, and farm operational efficiency.",
+          ? "A centralized industrial management system that digitizes inventory tracking across multiple factory locations, preventing stock shortages and ensuring every tool or component is used according to its intended project through real-time monitoring and automated alerts."
+          : "A centralized industrial management system that digitizes inventory tracking across multiple factory locations, preventing stock shortages and ensuring every tool or component is used according to its intended project through real-time monitoring and automated alerts.",
       image: "https://picsum.photos/seed/sapi/800/600?blur=2",
-      tags: ["ASP.NET Core", "C#", "SQL Server", "Bootstrap"],
+      tags: ["ASP.NET Core", "C#", "SQL Server", "Tailwind CSS"],
       role: lang === "id" ? "Pengembang Backend" : "Backend Developer",
     },
     {
       id: "p4",
       title:
         lang === "id"
-          ? "RELA-ESTAFET Logistik Bencana"
-          : "RELA-ESTAFET Relief Logistics",
+          ? "Document Management System"
+          : "Document Management System",
       description:
         lang === "id"
-          ? "Aplikasi web untuk manajemen logistik dan distribusi bantuan bencana alam, memudahkan koordinasi antara relawan dan posko pusat."
-          : "Web application for disaster relief logistics and distribution management, facilitating coordination between volunteers and central command.",
+          ? "A modern digital filing cabinet that automates document approvals, ensures data integrity with digital signatures, and tracks every user action within a secure, high-performance interface."
+          : "A modern digital filing cabinet that automates document approvals, ensures data integrity with digital signatures, and tracks every user action within a secure, high-performance interface.",
       image: "https://picsum.photos/seed/disaster/800/600?blur=2",
-      tags: ["Laravel", "React", "PostgreSQL", "Maps API"],
+      tags: ["CakePHP", "TailwindCSS", "Alpine.js", "SQL Server"],
       duration: lang === "id" ? "3 Bulan" : "3 Months",
     },
     {
       id: "p5",
-      title:
-        lang === "id"
-          ? "Sistem Pemantauan Banjir IoT 1"
-          : "IoT Flood Monitoring System 1",
+      title: lang === "id" ? "FloodGuard AI" : "FloodGuard AI",
       description:
         lang === "id"
-          ? "Sistem peringatan dini untuk memantau ketinggian debit air secara real-time."
-          : "Early warning system for real-time monitoring of water levels.",
+          ? "An AI-powered disaster mitigation ecosystem that integrates real-time weather analytics, dynamic flood risk mapping, and a context-aware smart assistant to provide life-saving evacuation guidance during flood emergencies."
+          : "An AI-powered disaster mitigation ecosystem that integrates real-time weather analytics, dynamic flood risk mapping, and a context-aware smart assistant to provide life-saving evacuation guidance during flood emergencies.",
       image: "https://picsum.photos/seed/flood1/800/600?blur=2",
-      tags: ["Python", "HTML", "Raspberry Pi", "IoT"],
+      tags: [
+        "React 18",
+        "TypeScript",
+        "Tailwind CSS",
+        "Express.js",
+        "Open-Meteo API",
+        "OSRM Routing API",
+        "Recharts",
+      ],
     },
     {
       id: "p6",
       title:
         lang === "id"
-          ? "Sistem Pemantauan Banjir IoT 2"
-          : "IoT Flood Monitoring System 2",
+          ? "Attendance & Operations Management System"
+          : "Attendance & Operations Management System",
       description:
         lang === "id"
-          ? "Sensor tambahan untuk perluasan wilayah monitoring di titik rawan."
-          : "Additional sensors for monitoring expansion in prone areas.",
+          ? "A specialized ATM cleaning management platform that ensures physical attendance via GPS tracking, automates multi-angle photo reports, and provides banks with real-time transparency into their asset's hygiene status."
+          : "A specialized ATM cleaning management platform that ensures physical attendance via GPS tracking, automates multi-angle photo reports, and provides banks with real-time transparency into their asset's hygiene status.",
       image: "https://picsum.photos/seed/flood2/800/600?blur=2",
-      tags: ["Python", "HTML", "Raspberry Pi", "IoT"],
+      tags: ["React 18", "TailwindCSS", "Express.js", "PWA"],
     },
     {
       id: "p7",
@@ -162,7 +168,7 @@ export function Projects({ id, lang }: { id?: string; lang: "id" | "en" }) {
 
   const scroll = (direction: "left" | "right") => {
     if (sliderRef.current) {
-      const scrollAmount = sliderRef.current.clientWidth / 3;
+      const scrollAmount = sliderRef.current.clientWidth / 2;
       sliderRef.current.scrollBy({
         left: direction === "left" ? -scrollAmount : scrollAmount,
         behavior: "smooth",
@@ -353,7 +359,6 @@ export function Projects({ id, lang }: { id?: string; lang: "id" | "en" }) {
               {lang === "id" ? "Proyek" : "Projects"}
             </h2>
           </div>
-          
         </div>
 
         {/* Tombol Slide dan Teks Petunjuk (Ditampilkan jika lebih dari 6 proyek) */}
@@ -388,20 +393,19 @@ export function Projects({ id, lang }: { id?: string; lang: "id" | "en" }) {
       {/* Grid */}
       <div
         ref={sliderRef}
-        className="grid grid-rows-2 grid-flow-col auto-cols-[85vw] sm:auto-cols-[calc(50%-10px)] lg:auto-cols-[calc(33.333%-16px)] gap-5 sm:gap-6 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-6 -mx-4 px-4 sm:mx-0 sm:px-0"
+        className="grid grid-rows-2 grid-flow-col auto-cols-[85vw] sm:auto-cols-[calc(50%-12px)] gap-5 sm:gap-6 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-6 -mx-4 px-4 sm:mx-0 sm:px-0"
       >
         {projects.map((project) => (
           <div
             key={project.id}
             onClick={() => setSelectedProject(project)}
-            /* Dihapus: hover:-translate-y-1.5 */
-            className="project-card opacity-0 group relative rounded-2xl overflow-hidden bg-white/70 dark:bg-white/5 backdrop-blur-md border border-gray-200/80 dark:border-white/10 cursor-pointer hover:border-[#b026ff]/50 dark:hover:border-[#00f0ff]/50 hover:shadow-xl dark:hover:shadow-[0_8px_30px_rgba(0,240,255,0.1)] transition-all duration-500 flex flex-col h-[320px] snap-start"
+            className="project-card opacity-0 group relative rounded-2xl overflow-hidden bg-white/70 dark:bg-white/5 backdrop-blur-md border border-gray-200/80 dark:border-white/10 cursor-pointer hover:border-[#b026ff]/50 dark:hover:border-[#00f0ff]/50 hover:shadow-xl dark:hover:shadow-[0_8px_30px_rgba(0,240,255,0.1)] transition-all duration-500 flex flex-col h-[380px] snap-start"
           >
             {/* Ambient Background Glow pada Hover */}
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#b026ff]/5 dark:to-[#00f0ff]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
 
             {/* Bagian Gambar */}
-            <div className="w-full h-36 overflow-hidden relative shrink-0">
+            <div className="w-full h-[40%] overflow-hidden relative shrink-0">
               <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500 z-10"></div>
               <img
                 src={project.image}
@@ -412,16 +416,38 @@ export function Projects({ id, lang }: { id?: string; lang: "id" | "en" }) {
             </div>
 
             {/* Bagian Teks */}
-            <div className="p-4 flex flex-col flex-grow relative z-10">
-              <h3 className="text-base font-bold mb-1.5 group-hover:text-[#b026ff] dark:group-hover:text-[#00f0ff] transition-colors duration-300 line-clamp-1">
+            <div className="p-4 sm:p-5 flex flex-col h-[60%] relative z-10">
+              <h3 className="text-base sm:text-lg font-bold mb-2 group-hover:text-[#b026ff] dark:group-hover:text-[#00f0ff] transition-colors duration-300 line-clamp-2 shrink-0">
                 {project.title}
               </h3>
 
-              <p className="text-gray-600 dark:text-gray-400 text-xs line-clamp-2 font-light flex-grow leading-relaxed">
-                {project.description}
-              </p>
+              <div className="flex-grow flex flex-col items-start justify-start overflow-y-auto no-scrollbar">
+                <p
+                  className={`text-gray-600 dark:text-gray-400 text-xs sm:text-sm font-light leading-relaxed ${
+                    expandedDesc[project.id]
+                      ? ""
+                      : "line-clamp-2 md:line-clamp-3"
+                  }`}
+                >
+                  {project.description}
+                </p>
+                {project.description.length > 90 && (
+                  <button
+                    onClick={(e) => toggleDesc(e, project.id)}
+                    className="text-[#b026ff] dark:text-[#00f0ff] text-[10px] font-semibold mt-1 hover:underline focus:outline-none shrink-0"
+                  >
+                    {expandedDesc[project.id]
+                      ? lang === "id"
+                        ? "Lebih Sedikit"
+                        : "Show Less"
+                      : lang === "id"
+                        ? "Baca Selengkapnya"
+                        : "Read More"}
+                  </button>
+                )}
+              </div>
 
-              <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-gray-200/60 dark:border-white/5">
+              <div className="flex flex-wrap gap-1 mt-3 pt-2 border-t border-gray-200/60 dark:border-white/5 shrink-0 mt-auto">
                 {project.tags.slice(0, 3).map((tag) => (
                   <span
                     key={tag}
